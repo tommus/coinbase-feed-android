@@ -1,0 +1,11 @@
+Keystore Password: todo
+Alias: todo
+
+Certificate Password: todo
+
+First and Last Name (CN): todo
+Organization Unit (OU): todo
+Organization (O): todo
+Locality (L): todo
+State (ST): todo
+Country Code (C): todo

@@ -1,0 +1,174 @@
+//region Startup Plugins
+
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
+
+//endregion
+
+//region Android
+
+android {
+
+  //region Build Configuration
+
+  buildTypes {
+    debug {
+      useProguard false
+      minifyEnabled false
+      shrinkResources false
+    }
+    release {
+      useProguard true
+      minifyEnabled true
+      shrinkResources true
+      proguardFiles getDefaultProguardFile("proguard-android.txt"),
+          rootProject.file("settings/proguard/proguard-rules.pro")
+    }
+  }
+
+  //endregion
+
+  //region Compile Options
+
+  compileSdkVersion deps.build_versions.compile_sdk
+
+  //endregion
+
+  //region Default Config
+
+  defaultConfig {
+    minSdkVersion deps.build_versions.min_sdk
+    targetSdkVersion deps.build_versions.target_sdk
+    applicationId "co.windly.coinbasefeed"
+  }
+
+  //endregion
+
+  //region Flavor Dimensions
+
+  flavorDimensions "todo"
+
+  //endregion
+
+  //region Product Flavors
+
+  productFlavors {
+    dev {
+      applicationIdSuffix ".dev"
+      versionCode = getAutoVersionCode()
+      versionName = getAutoVersionName() + " (dev)"
+      dimension "todo"
+    }
+    prod {
+      versionCode = getAutoVersionCode()
+      versionName = getAutoVersionName()
+      dimension "todo"
+    }
+  }
+
+  //endregion
+
+  //region Source
+
+  sourceSets {
+    main.java.srcDirs += "src/main/kotlin"
+  }
+
+  //endregion
+}
+
+//endregion
+
+//region Dependencies
+
+dependencies {
+
+  //region Application Files
+
+  implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
+
+  //endregion
+
+  //region Dagger
+
+  compileOnly deps.dagger.annotations
+  kapt deps.dagger.compiler
+  implementation deps.dagger.runtime
+
+  //endregion
+
+  //region Database
+
+  implementation deps.room.runtime
+  implementation deps.room.rxjava2
+  kapt deps.room.compiler
+
+  //endregion
+
+  //region Debugging
+
+  implementation deps.facebook.stetho
+  implementation deps.misc.timber
+
+  //endregion
+
+  //region Kotlin
+
+  implementation deps.kotlin.stdlib_jdk7
+
+  //endregion
+
+  //region Mapping
+
+  implementation deps.misc.model_mapper
+
+  //endregion
+
+  //region Miscellaneous
+
+  implementation deps.misc.joda_time
+  implementation deps.misc.limbo
+
+  //endregion
+
+  //region Networking
+
+  implementation deps.scarlet.message_adapter_moshi
+  implementation deps.scarlet.runtime
+  implementation deps.scarlet.stream_adapter_rxjava2
+  implementation deps.scarlet.websocket_okhttp
+  implementation deps.misc.okhttp
+  implementation deps.misc.okhttp_logging_interceptor
+
+  //endregion
+
+  //region Reactive extensions
+
+  implementation deps.rx.android
+  implementation deps.rx.java
+  implementation deps.rx.kotlin
+
+  //endregion
+
+  //region Shared Preferences
+
+  implementation deps.misc.androidx_preferences
+  kapt deps.misc.androidx_preferences_compiler
+
+  //endregion
+
+  //region Ui
+
+  implementation deps.androidx.appcompat
+  implementation deps.androidx.cardview
+  implementation deps.androidx.constraint
+  implementation deps.androidx.recyclerview
+  implementation deps.ui.material
+
+  //endregion
+}
+
+
+//endregion

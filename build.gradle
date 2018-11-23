@@ -1,0 +1,97 @@
+import java.text.SimpleDateFormat
+
+//region Build Script
+
+buildscript {
+  repositories {
+    apply from: "versions.gradle"
+    addRepos(repositories)
+  }
+  dependencies {
+    classpath deps.build.android_gradle_plugin
+    classpath deps.build.kotlin_gradle_plugin
+  }
+}
+
+//endregion
+
+//region All Projects
+
+allprojects {
+  repositories {
+    addRepos(repositories)
+  }
+}
+
+//endregion
+
+//region Tasks
+
+task clean(type: Delete) {
+  delete rootProject.buildDir
+}
+
+//endregion
+
+//region Naming
+
+@SuppressWarnings("GroovyUnusedDeclaration")
+static def getProjectName() {
+  return "Coinbase Feed"
+}
+
+//endregion
+
+//region Versioning
+
+@SuppressWarnings("GroovyUnusedDeclaration")
+static def getAutoVersionName() {
+  def (major, minor, patch, build, sha) = getLastMasterGitTagVersion()
+  def code = getAutoVersionCode()
+  def date = getBuildDate()
+  return (getCurrentBranch() == "master") ? "${major}.${minor}.${patch}" : "${sha}-${date} ($code)"
+}
+
+@SuppressWarnings("GroovyUnusedDeclaration")
+static def getDevelopVersionCode() {
+  def count = getGitCommitsCount()
+  return (count == null || count.empty) ? 0 : count.toInteger()
+}
+
+@SuppressWarnings("GroovyUnusedDeclaration")
+static def getProductionVersionCode() {
+  def (major, minor, patch, build, sha) = getLastMasterGitTagVersion()
+  return major.toInteger() * 1_000_000 + minor.toInteger() * 1_000 + patch.toInteger()
+}
+
+@SuppressWarnings("GroovyUnusedDeclaration")
+static def getAutoVersionCode() {
+  def branch = getCurrentBranch()
+  if (branch == "master") {
+    return getProductionVersionCode()
+  }
+  return getDevelopVersionCode()
+}
+
+static def getCurrentBranch() {
+  return "git rev-parse --abbrev-ref HEAD".execute().text.trim()
+}
+
+static def getBuildDate() {
+  def df = new SimpleDateFormat("dd.MM.yyyy")
+  df.setTimeZone(TimeZone.getDefault())
+  return df.format(new Date())
+}
+
+static def getGitCommitsCount() {
+  return ("git rev-list ${getCurrentBranch()} --count").execute().text.trim()
+}
+
+static def getLastMasterGitTagVersion() {
+  def name = "git describe --tags ${getCurrentBranch()} --long".execute().text.replace("v", "").trim()
+  def (tag, build, sha) = name.tokenize("-")
+  def (major, minor, patch) = (tag != null) ? tag.tokenize(".") : [0, 0, 0]
+  return [major, minor, patch, build, sha]
+}
+
+//endregion
