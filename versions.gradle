@@ -99,7 +99,7 @@ deps.misc = misc
 //region Networking
 
 def scarlet = [:]
-scarlet.message_adapter_moshi = "com.github.tinder.scarlet:scarlet-message-adapter-moshi:$versions.scarlet"
+scarlet.message_adapter_gson = "com.github.tinder.scarlet:scarlet-message-adapter-gson:$versions.scarlet"
 scarlet.runtime = "com.github.tinder.scarlet:scarlet:$versions.scarlet"
 scarlet.stream_adapter_rxjava2 = "com.github.tinder.scarlet:scarlet-stream-adapter-rxjava2:$versions.scarlet"
 scarlet.websocket_okhttp = "com.github.tinder.scarlet:scarlet-websocket-okhttp:$versions.scarlet"

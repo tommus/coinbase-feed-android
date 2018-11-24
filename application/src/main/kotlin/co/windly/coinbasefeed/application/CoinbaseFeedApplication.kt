@@ -1,6 +1,7 @@
 package co.windly.coinbasefeed.application
 
 import android.app.Application
+import co.windly.coinbasefeed.utility.log.WiLogger
 import com.facebook.stetho.Stetho
 import javax.inject.Inject
 
@@ -55,7 +56,8 @@ class CoinbaseFeedApplication : Application(), ApplicationComponent.ComponentPro
   //region Logger
 
   private fun initializeLogger() {
-    // TODO:
+    WiLogger
+      .init(true)
   }
 
   //endregion

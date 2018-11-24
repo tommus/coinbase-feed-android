@@ -135,7 +135,7 @@ dependencies {
 
   //region Networking
 
-  implementation deps.scarlet.message_adapter_moshi
+  implementation deps.scarlet.message_adapter_gson
   implementation deps.scarlet.runtime
   implementation deps.scarlet.stream_adapter_rxjava2
   implementation deps.scarlet.websocket_okhttp
