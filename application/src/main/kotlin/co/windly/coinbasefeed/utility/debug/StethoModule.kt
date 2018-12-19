@@ -49,7 +49,7 @@ class StethoModule {
 
   @Provides
   @Singleton
-  internal fun provideInspectorModulesProdiver(context: Context) =
+  internal fun provideInspectorModulesProvider(context: Context) =
     Stetho.defaultInspectorModulesProvider(context)
 
   //endregion

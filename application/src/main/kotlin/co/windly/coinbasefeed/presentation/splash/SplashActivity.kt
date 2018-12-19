@@ -2,7 +2,6 @@ package co.windly.coinbasefeed.presentation.splash
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.content.ContextCompat.startActivity
 import co.windly.coinbasefeed.R
 import co.windly.coinbasefeed.presentation.main.MainActivity
 import co.windly.limbo.activity.base.LimboActivity
