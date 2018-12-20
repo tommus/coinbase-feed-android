@@ -1,16 +1,23 @@
 package co.windly.coinbasefeed.presentation.main
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import co.windly.coinbasefeed.R
+import co.windly.coinbasefeed.presentation.base.activity.fragment.BaseFragmentActivity
 import co.windly.coinbasefeed.presentation.main.rate.ExchangeRateFragment
-import co.windly.limbo.activity.fragment.LimboFragmentActivity
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
-class MainActivity : LimboFragmentActivity<MainView, MainPresenter>(), MainView, MainComponent.ComponentProvider {
+class MainActivity : BaseFragmentActivity<MainView, MainPresenter>(), MainView, HasSupportFragmentInjector {
 
-  //region Component
+  //region Injector
 
-  override lateinit var mainComponent: MainComponent
+  @Inject
+  lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
+
+  override fun supportFragmentInjector(): DispatchingAndroidInjector<Fragment> =
+    fragmentInjector
 
   //endregion
 
@@ -25,19 +32,14 @@ class MainActivity : LimboFragmentActivity<MainView, MainPresenter>(), MainView,
   @Inject
   lateinit var mainPresenter: MainPresenter
 
-  override fun createPresenter() = mainPresenter
+  override fun createPresenter(): MainPresenter =
+    mainPresenter
 
   //endregion
 
   //region Lifecycle
 
   override fun onCreate(savedInstanceState: Bundle?) {
-
-    // Initialize component.
-    mainComponent = DaggerMainComponent.builder()
-      .build()
-    mainComponent.inject(this)
-
     super.onCreate(savedInstanceState)
 
     // Load fragment.

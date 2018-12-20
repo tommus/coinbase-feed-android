@@ -1,7 +1,6 @@
 package co.windly.coinbasefeed.presentation.main.rate
 
-import co.windly.limbo.fragment.base.LimboFragmentPresenter
+import co.windly.coinbasefeed.presentation.base.fragment.base.BaseFragmentPresenter
+import javax.inject.Inject
 
-class ExchangeRatePresenter : LimboFragmentPresenter<ExchangeRateView>() {
-  // No-op.
-}
+class ExchangeRatePresenter @Inject constructor() : BaseFragmentPresenter<ExchangeRateView>()

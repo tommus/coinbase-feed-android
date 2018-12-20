@@ -17,7 +17,7 @@ class HttpModule {
 
   @Provides
   @Singleton
-  internal fun provideOkHttpClient(builder: OkHttpClient.Builder) =
+  internal fun provideOkHttpClient(builder: OkHttpClient.Builder): OkHttpClient =
     builder
       .build()
 
@@ -45,7 +45,7 @@ class HttpModule {
 
   @Provides
   @Singleton
-  internal fun provideLoggingLevel() =
+  internal fun provideLoggingLevel(): Level =
     Level.BODY
 
   //endregion

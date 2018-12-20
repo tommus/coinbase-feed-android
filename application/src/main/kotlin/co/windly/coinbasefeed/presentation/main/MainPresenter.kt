@@ -1,9 +1,8 @@
 package co.windly.coinbasefeed.presentation.main
 
-import co.windly.limbo.activity.fragment.LimboFragmentActivityPresenter
+import co.windly.coinbasefeed.presentation.base.activity.fragment.BaseFragmentActivityPresenter
 import javax.inject.Inject
 
-@MainScope
-class MainPresenter @Inject constructor() : LimboFragmentActivityPresenter<MainView>() {
+class MainPresenter @Inject constructor() : BaseFragmentActivityPresenter<MainView>() {
   // No-op.
 }

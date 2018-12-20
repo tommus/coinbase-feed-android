@@ -1,33 +1,20 @@
 package co.windly.coinbasefeed.presentation.main
 
-import dagger.Component
+import co.windly.coinbasefeed.presentation.main.rate.ExchangeRateModule
+import dagger.Subcomponent
+import dagger.android.AndroidInjector
 
-@Component
-@MainScope
-interface MainComponent {
+@Subcomponent(
+  modules = [
+    ExchangeRateModule::class
+  ]
+)
+interface MainComponent : AndroidInjector<MainActivity> {
 
-  //region Injections
+  //region Builder
 
-  fun inject(activity: MainActivity)
-
-  //endregion
-
-  //region Component Builder
-
-  @Component.Builder
-  interface Builder {
-
-    fun build(): MainComponent
-  }
-
-  //endregion
-
-  //region Component Provider
-
-  interface ComponentProvider {
-
-    val mainComponent: MainComponent
-  }
+  @Subcomponent.Builder
+  abstract class Builder : AndroidInjector.Builder<MainActivity>()
 
   //endregion
 }

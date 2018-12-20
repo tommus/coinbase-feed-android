@@ -85,17 +85,18 @@ android {
 
 dependencies {
 
-  //region Application Files
+  //region Annotation Processing
 
-  implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
+  kapt deps.dagger.compiler
+  kapt deps.dagger.android_processor
+  kapt deps.room.compiler
+  kapt deps.misc.androidx_preferences_compiler
 
   //endregion
 
-  //region Dagger
+  //region Application Files
 
-  compileOnly deps.dagger.annotations
-  kapt deps.dagger.compiler
-  implementation deps.dagger.runtime
+  implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
 
   //endregion
 
@@ -103,7 +104,6 @@ dependencies {
 
   implementation deps.room.runtime
   implementation deps.room.rxjava2
-  kapt deps.room.compiler
 
   //endregion
 
@@ -114,9 +114,18 @@ dependencies {
 
   //endregion
 
+  //region Dependency Injection
+
+  implementation deps.dagger.android
+  implementation deps.dagger.android_support
+  compileOnly deps.dagger.annotations
+  implementation deps.dagger.runtime
+
+  //endregion
+
   //region Kotlin
 
-  implementation deps.kotlin.stdlib_jdk7
+  implementation deps.kotlin.stdlib_jdk8
 
   //endregion
 
@@ -155,7 +164,6 @@ dependencies {
   //region Shared Preferences
 
   implementation deps.misc.androidx_preferences
-  kapt deps.misc.androidx_preferences_compiler
 
   //endregion
 
@@ -169,6 +177,5 @@ dependencies {
 
   //endregion
 }
-
 
 //endregion

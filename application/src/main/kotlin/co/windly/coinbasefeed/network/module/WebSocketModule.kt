@@ -22,8 +22,8 @@ class WebSocketModule {
 
   @Provides
   @Singleton
-  internal fun provideFeedService(scarlet: Scarlet) =
-    scarlet.create<FeedService>()
+  internal fun provideFeedService(scarlet: Scarlet): FeedService =
+    scarlet.create()
 
   //endregion
 
@@ -37,7 +37,7 @@ class WebSocketModule {
     messageAdapterFactory: MessageAdapter.Factory,
     streamAdapterFactory: StreamAdapter.Factory,
     webSocketFactory: WebSocket.Factory
-  ) =
+  ): Scarlet.Builder =
     builder
       .backoffStrategy(backoffStrategy)
       .addMessageAdapterFactory(messageAdapterFactory)
@@ -89,7 +89,7 @@ class WebSocketModule {
 
   @Provides
   @Singleton
-  internal fun provideWebSocketFactory(okHttpClient: OkHttpClient) =
+  internal fun provideWebSocketFactory(okHttpClient: OkHttpClient): WebSocket.Factory =
     okHttpClient
       .newWebSocketFactory(Connection.URL)
 

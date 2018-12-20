@@ -1,7 +1,7 @@
 package co.windly.coinbasefeed.presentation.main
 
-import co.windly.limbo.activity.fragment.LimboFragmentActivityView
+import co.windly.coinbasefeed.presentation.base.activity.fragment.BaseFragmentActivityView
 
-interface MainView : LimboFragmentActivityView {
+interface MainView : BaseFragmentActivityView {
   // No-op.
 }

@@ -1,8 +1,8 @@
 package co.windly.coinbasefeed.presentation.splash
 
-import co.windly.limbo.activity.base.LimboActivityView
+import co.windly.coinbasefeed.presentation.base.activity.base.BaseActivityView
 
-interface SplashView : LimboActivityView {
+interface SplashView : BaseActivityView {
 
   //region Navigation
 

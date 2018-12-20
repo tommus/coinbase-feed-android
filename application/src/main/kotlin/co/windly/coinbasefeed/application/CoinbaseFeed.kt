@@ -1,15 +1,29 @@
 package co.windly.coinbasefeed.application
 
+import android.app.Activity
 import android.app.Application
 import co.windly.coinbasefeed.utility.log.WiLogger
 import com.facebook.stetho.Stetho
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
 import javax.inject.Inject
 
-class CoinbaseFeedApplication : Application(), ApplicationComponent.ComponentProvider {
+class CoinbaseFeed : Application(), ApplicationComponent.ComponentProvider, HasActivityInjector {
 
   //region Components
 
   override lateinit var applicationComponent: ApplicationComponent
+
+  //endregion
+
+  //region Injector
+
+  @Inject
+  lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+
+  override fun activityInjector(): AndroidInjector<Activity> =
+    activityInjector
 
   //endregion
 

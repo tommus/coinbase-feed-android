@@ -3,17 +3,11 @@ package co.windly.coinbasefeed.presentation.splash
 import android.content.Intent
 import android.os.Bundle
 import co.windly.coinbasefeed.R
+import co.windly.coinbasefeed.presentation.base.activity.base.BaseActivity
 import co.windly.coinbasefeed.presentation.main.MainActivity
-import co.windly.limbo.activity.base.LimboActivity
 import javax.inject.Inject
 
-class SplashActivity : LimboActivity<SplashView, SplashPresenter>(), SplashView, SplashComponent.ComponentProvider {
-
-  //region Component
-
-  override lateinit var splashComponent: SplashComponent
-
-  //endregion
+class SplashActivity : BaseActivity<SplashView, SplashPresenter>(), SplashView {
 
   //region Ui
 
@@ -26,7 +20,8 @@ class SplashActivity : LimboActivity<SplashView, SplashPresenter>(), SplashView,
   @Inject
   lateinit var splashPresenter: SplashPresenter
 
-  override fun createPresenter() = splashPresenter
+  override fun createPresenter(): SplashPresenter =
+    splashPresenter
 
   //endregion
 
@@ -46,12 +41,6 @@ class SplashActivity : LimboActivity<SplashView, SplashPresenter>(), SplashView,
   //region Lifecycle
 
   override fun onCreate(savedInstanceState: Bundle?) {
-
-    // Initialize component.
-    splashComponent = DaggerSplashComponent.builder()
-      .build()
-    splashComponent.inject(this)
-
     super.onCreate(savedInstanceState)
 
     // Start counting the automatic continue timer.

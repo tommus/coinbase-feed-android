@@ -1,7 +1,5 @@
 package co.windly.coinbasefeed.presentation.main.rate
 
-import co.windly.limbo.fragment.base.LimboFragmentView
+import co.windly.coinbasefeed.presentation.base.fragment.base.BaseFragmentView
 
-interface ExchangeRateView : LimboFragmentView {
-  // No-op.
-}
+interface ExchangeRateView : BaseFragmentView

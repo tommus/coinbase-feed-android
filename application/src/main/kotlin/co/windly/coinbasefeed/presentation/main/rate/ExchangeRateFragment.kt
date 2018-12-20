@@ -2,9 +2,10 @@ package co.windly.coinbasefeed.presentation.main.rate
 
 import android.os.Bundle
 import co.windly.coinbasefeed.R
-import co.windly.limbo.fragment.base.LimboFragment
+import co.windly.coinbasefeed.presentation.base.fragment.base.BaseFragment
+import javax.inject.Inject
 
-class ExchangeRateFragment : LimboFragment<ExchangeRateView, ExchangeRatePresenter>(), ExchangeRateView {
+class ExchangeRateFragment : BaseFragment<ExchangeRateView, ExchangeRatePresenter>(), ExchangeRateView {
 
   //region Fragment
 
@@ -31,7 +32,11 @@ class ExchangeRateFragment : LimboFragment<ExchangeRateView, ExchangeRatePresent
 
   //region Presenter
 
-  override fun createPresenter() = ExchangeRatePresenter()
+  @Inject
+  lateinit var exchangeRatePresenter: ExchangeRatePresenter
+
+  override fun createPresenter(): ExchangeRatePresenter =
+    exchangeRatePresenter
 
   //endregion
 }

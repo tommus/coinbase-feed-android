@@ -3,6 +3,7 @@ package co.windly.coinbasefeed.application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Module
 class ApplicationModule {
@@ -10,7 +11,8 @@ class ApplicationModule {
   //region Context
 
   @Provides
-  internal fun provideApplicationContext(application: CoinbaseFeedApplication): Context =
+  @Singleton
+  internal fun provideApplicationContext(application: CoinbaseFeed): Context =
     application
 
   //endregion

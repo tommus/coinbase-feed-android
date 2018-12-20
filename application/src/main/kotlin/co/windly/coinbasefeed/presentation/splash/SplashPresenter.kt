@@ -1,15 +1,14 @@
 package co.windly.coinbasefeed.presentation.splash
 
+import co.windly.coinbasefeed.presentation.base.activity.base.BaseActivityPresenter
 import co.windly.coinbasefeed.utility.log.WiLogger
-import co.windly.limbo.activity.base.LimboActivityPresenter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
-@SplashScope
-class SplashPresenter @Inject constructor() : LimboActivityPresenter<SplashView>() {
+class SplashPresenter @Inject constructor() : BaseActivityPresenter<SplashView>() {
 
   //region Automatic Continue
 
