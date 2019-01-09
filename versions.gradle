@@ -7,36 +7,23 @@ ext.deps = deps
 
 def versions = [:]
 versions.android_gradle_plugin = "3.2.1"
-versions.androidx = "1.0.0"
-versions.androidx_preferences = "1.0.6"
-versions.constraint = "1.1.3"
-versions.dagger = "2.16"
+versions.constraint_layout = "1.1.3"
+versions.dagger = "2.20"
+versions.javax_annotation = "1.2"
 versions.joda_time = "2.10.1"
-versions.jsr_annotations = "1.0"
 versions.kotlin = "1.3.11"
-versions.limbo = "0.5.7"
-versions.material = "1.0.0"
+versions.limbo = "0.5.5"
 versions.model_mapper = "2.3.1"
 versions.okhttp = "3.12.0"
-versions.room = "2.0.0"
+versions.room = "1.1.1"
 versions.rx_android = "2.1.0"
-versions.rx_java = "2.2.3"
+versions.rx_java = "2.2.5"
 versions.rx_kotlin = "2.3.0"
 versions.scarlet = "0.2.1-alpha3"
 versions.stetho = "1.5.0"
+versions.support = "28.0.0"
 versions.timber = "4.7.1"
 deps.versions = versions
-
-//endregion
-
-//region AndroidX
-
-def androidx = [:]
-androidx.appcompat = "androidx.appcompat:appcompat:$versions.androidx"
-androidx.cardview = "androidx.cardview:cardview:$versions.androidx"
-androidx.constraint = "androidx.constraintlayout:constraintlayout:$versions.constraint"
-androidx.recyclerview = "androidx.recyclerview:recyclerview:$versions.androidx"
-deps.androidx = androidx
 
 //endregion
 
@@ -61,7 +48,7 @@ def dagger = [:]
 dagger.android = "com.google.dagger:dagger-android:$versions.dagger"
 dagger.android_processor = "com.google.dagger:dagger-android-processor:$versions.dagger"
 dagger.android_support = "com.google.dagger:dagger-android-support:$versions.dagger"
-dagger.annotations = "javax.annotation:jsr250-api:$versions.jsr_annotations"
+dagger.annotation = "javax.annotation:javax.annotation-api:$versions.javax_annotation"
 dagger.compiler = "com.google.dagger:dagger-compiler:$versions.dagger"
 dagger.runtime = "com.google.dagger:dagger:$versions.dagger"
 deps.dagger = dagger
@@ -87,13 +74,9 @@ deps.kotlin = kotlin
 //region Miscellaneous
 
 def misc = [:]
-misc.androidx_preferences = "co.windly:androidxpreferences:$versions.androidx_preferences"
-misc.androidx_preferences_compiler = "co.windly:androidxpreferences-compiler:$versions.androidx_preferences"
 misc.joda_time = "joda-time:joda-time:$versions.joda_time"
 misc.limbo = "co.windly:limbo:$versions.limbo"
 misc.model_mapper = "org.modelmapper:modelmapper:$versions.model_mapper"
-misc.okhttp = "com.squareup.okhttp3:okhttp:$versions.okhttp"
-misc.okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp"
 misc.timber = "com.jakewharton.timber:timber:$versions.timber"
 deps.misc = misc
 
@@ -101,12 +84,14 @@ deps.misc = misc
 
 //region Networking
 
-def scarlet = [:]
-scarlet.message_adapter_gson = "com.github.tinder.scarlet:scarlet-message-adapter-gson:$versions.scarlet"
-scarlet.runtime = "com.github.tinder.scarlet:scarlet:$versions.scarlet"
-scarlet.stream_adapter_rxjava2 = "com.github.tinder.scarlet:scarlet-stream-adapter-rxjava2:$versions.scarlet"
-scarlet.websocket_okhttp = "com.github.tinder.scarlet:scarlet-websocket-okhttp:$versions.scarlet"
-deps.scarlet = scarlet
+def network = [:]
+network.okhttp = "com.squareup.okhttp3:okhttp:$versions.okhttp"
+network.okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp"
+network.scarlet_message_adapter_gson = "com.github.tinder.scarlet:scarlet-message-adapter-gson:$versions.scarlet"
+network.scarlet_runtime = "com.github.tinder.scarlet:scarlet:$versions.scarlet"
+network.scarlet_stream_adapter_rxjava2 = "com.github.tinder.scarlet:scarlet-stream-adapter-rxjava2:$versions.scarlet"
+network.scarlet_websocket_okhttp = "com.github.tinder.scarlet:scarlet-websocket-okhttp:$versions.scarlet"
+deps.network = network
 
 //endregion
 
@@ -123,18 +108,20 @@ deps.rx = rx
 //region Room
 
 def room = [:]
-room.compiler = "androidx.room:room-compiler:$versions.room"
-room.runtime = "androidx.room:room-runtime:$versions.room"
-room.rxjava2 = "androidx.room:room-rxjava2:$versions.room"
+room.compiler = "android.arch.persistence.room:compiler:$versions.room"
+room.runtime = "android.arch.persistence.room:runtime:$versions.room"
+room.rxjava2 = "android.arch.persistence.room:rxjava2:$versions.room"
 deps.room = room
 
 //endregion
 
-//region Ui
+//region Support / Androidx
 
-def ui = [:]
-ui.material = "com.google.android.material:material:$versions.material"
-deps.ui = ui
+def support = [:]
+support.app_compat = "com.android.support:appcompat-v7:$versions.support"
+support.constraint_layout = "com.android.support.constraint:constraint-layout:$versions.constraint_layout"
+support.design = "com.android.support:design:$versions.support"
+deps.support = support
 
 //endregion
 

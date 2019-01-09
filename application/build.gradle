@@ -90,7 +90,6 @@ dependencies {
   kapt deps.dagger.compiler
   kapt deps.dagger.android_processor
   kapt deps.room.compiler
-  kapt deps.misc.androidx_preferences_compiler
 
   //endregion
 
@@ -118,7 +117,7 @@ dependencies {
 
   implementation deps.dagger.android
   implementation deps.dagger.android_support
-  compileOnly deps.dagger.annotations
+  compileOnly deps.dagger.annotation
   implementation deps.dagger.runtime
 
   //endregion
@@ -144,12 +143,12 @@ dependencies {
 
   //region Networking
 
-  implementation deps.scarlet.message_adapter_gson
-  implementation deps.scarlet.runtime
-  implementation deps.scarlet.stream_adapter_rxjava2
-  implementation deps.scarlet.websocket_okhttp
-  implementation deps.misc.okhttp
-  implementation deps.misc.okhttp_logging_interceptor
+  implementation deps.network.okhttp
+  implementation deps.network.okhttp_logging_interceptor
+  implementation deps.network.scarlet_message_adapter_gson
+  implementation deps.network.scarlet_runtime
+  implementation deps.network.scarlet_stream_adapter_rxjava2
+  implementation deps.network.scarlet_websocket_okhttp
 
   //endregion
 
@@ -161,19 +160,11 @@ dependencies {
 
   //endregion
 
-  //region Shared Preferences
-
-  implementation deps.misc.androidx_preferences
-
-  //endregion
-
   //region Ui
 
-  implementation deps.androidx.appcompat
-  implementation deps.androidx.cardview
-  implementation deps.androidx.constraint
-  implementation deps.androidx.recyclerview
-  implementation deps.ui.material
+  implementation deps.support.app_compat
+  implementation deps.support.constraint_layout
+  implementation deps.support.design
 
   //endregion
 }

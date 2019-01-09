@@ -1,7 +1,7 @@
 package co.windly.coinbasefeed.presentation.main
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.support.v4.app.Fragment
 import co.windly.coinbasefeed.R
 import co.windly.coinbasefeed.presentation.base.activity.fragment.BaseFragmentActivity
 import co.windly.coinbasefeed.presentation.main.rate.ExchangeRateFragment
@@ -17,7 +17,7 @@ class MainActivity : BaseFragmentActivity<MainView, MainPresenter>(), MainView, 
   lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
 
   override fun supportFragmentInjector(): DispatchingAndroidInjector<Fragment> =
-    fragmentInjector
+      fragmentInjector
 
   //endregion
 
@@ -33,7 +33,7 @@ class MainActivity : BaseFragmentActivity<MainView, MainPresenter>(), MainView, 
   lateinit var mainPresenter: MainPresenter
 
   override fun createPresenter(): MainPresenter =
-    mainPresenter
+      mainPresenter
 
   //endregion
 
