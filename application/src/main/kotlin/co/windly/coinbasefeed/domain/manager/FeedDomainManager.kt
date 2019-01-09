@@ -18,12 +18,16 @@ class FeedDomainManager @Inject constructor() {
   //region Event & State
 
   fun observeEvent(): Flowable<Event> =
-    network
-      .observeEvent()
+      network
+          .observeEvent()
 
   fun observeState(): Flowable<State> =
-    network
-      .observeState()
+      network
+          .observeState()
+
+  fun observeText(): Flowable<String> =
+      network
+          .observeText()
 
   //endregion
 }

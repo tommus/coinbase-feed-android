@@ -5,7 +5,7 @@ import co.windly.limbo.fragment.dialog.LimboDialogFragment
 import dagger.android.support.AndroidSupportInjection
 
 abstract class BaseDialogFragment<V : BaseDialogFragmentView, P : BaseDialogFragmentPresenter<V>> :
-  LimboDialogFragment<V, P>(), BaseDialogFragmentView {
+    LimboDialogFragment<V, P>(), BaseDialogFragmentView {
 
   //region Lifecycle
 

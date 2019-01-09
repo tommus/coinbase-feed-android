@@ -5,7 +5,7 @@ import co.windly.limbo.fragment.base.LimboFragment
 import dagger.android.support.AndroidSupportInjection
 
 abstract class BaseFragment<V : BaseFragmentView, P : BaseFragmentPresenter<V>> : LimboFragment<V, P>(),
-  BaseFragmentView {
+    BaseFragmentView {
 
   //region Lifecycle
 

@@ -7,13 +7,16 @@ import io.reactivex.Flowable
 
 interface FeedService {
 
-  //region Event & State
+  //region Service Info
 
   @Receive
   fun observeEvent(): Flowable<Event>
 
   @Receive
   fun observeState(): Flowable<State>
+
+  @Receive
+  fun observeText(): Flowable<String>
 
   //endregion
 }

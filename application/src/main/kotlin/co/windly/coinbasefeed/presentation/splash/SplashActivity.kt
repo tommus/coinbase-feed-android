@@ -21,7 +21,7 @@ class SplashActivity : BaseActivity<SplashView, SplashPresenter>(), SplashView {
   lateinit var splashPresenter: SplashPresenter
 
   override fun createPresenter(): SplashPresenter =
-    splashPresenter
+      splashPresenter
 
   //endregion
 

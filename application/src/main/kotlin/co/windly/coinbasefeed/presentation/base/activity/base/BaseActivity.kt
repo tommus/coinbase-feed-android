@@ -5,7 +5,7 @@ import co.windly.limbo.activity.base.LimboActivity
 import dagger.android.AndroidInjection
 
 abstract class BaseActivity<V : BaseActivityView, P : BaseActivityPresenter<V>> : LimboActivity<V, P>(),
-  BaseActivityView {
+    BaseActivityView {
 
   //region Lifecycle
 

@@ -19,14 +19,14 @@ class SplashPresenter @Inject constructor() : BaseActivityPresenter<SplashView>(
   fun observeAutomaticContinue() {
 
     Observable
-      .timer(Configuration.AUTO_CONTINUE_DELAY, MILLISECONDS)
-      .subscribeOn(Schedulers.computation())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(
-        { this.handleObserveAutomaticContinueSuccess(it) },
-        { this.handleObserveAutomaticContinueError(it) }
-      )
-      ?.let { addDisposable(it) }
+        .timer(Configuration.AUTO_CONTINUE_DELAY, MILLISECONDS)
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+            { this.handleObserveAutomaticContinueSuccess(it) },
+            { this.handleObserveAutomaticContinueError(it) }
+        )
+        ?.let { addDisposable(it) }
   }
 
   private fun handleObserveAutomaticContinueSuccess(delay: Long) {

@@ -13,15 +13,15 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-  modules = [
-    AndroidSupportInjectionModule::class,
-    ApplicationModule::class,
-    HttpModule::class,
-    MainModule::class,
-    SplashModule::class,
-    StethoModule::class,
-    WebSocketModule::class
-  ]
+    modules = [
+      AndroidSupportInjectionModule::class,
+      ApplicationModule::class,
+      HttpModule::class,
+      MainModule::class,
+      SplashModule::class,
+      StethoModule::class,
+      WebSocketModule::class
+    ]
 )
 interface ApplicationComponent : AndroidInjector<CoinbaseFeed> {
 

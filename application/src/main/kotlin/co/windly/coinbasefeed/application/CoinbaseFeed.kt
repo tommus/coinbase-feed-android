@@ -23,7 +23,7 @@ class CoinbaseFeed : Application(), ApplicationComponent.ComponentProvider, HasA
   lateinit var activityInjector: DispatchingAndroidInjector<Activity>
 
   override fun activityInjector(): AndroidInjector<Activity> =
-    activityInjector
+      activityInjector
 
   //endregion
 
@@ -49,7 +49,7 @@ class CoinbaseFeed : Application(), ApplicationComponent.ComponentProvider, HasA
 
   private fun initializeDebugBridge() {
     Stetho
-      .initialize(stethoInitializer)
+        .initialize(stethoInitializer)
   }
 
   //endregion
@@ -60,8 +60,8 @@ class CoinbaseFeed : Application(), ApplicationComponent.ComponentProvider, HasA
 
     // Initialize application component.
     applicationComponent = DaggerApplicationComponent.builder()
-      .application(this)
-      .build()
+        .application(this)
+        .build()
     applicationComponent.inject(this)
   }
 
@@ -71,7 +71,7 @@ class CoinbaseFeed : Application(), ApplicationComponent.ComponentProvider, HasA
 
   private fun initializeLogger() {
     WiLogger
-      .init(true)
+        .init(true)
   }
 
   //endregion

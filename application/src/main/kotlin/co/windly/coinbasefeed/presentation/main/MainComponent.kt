@@ -5,9 +5,9 @@ import dagger.Subcomponent
 import dagger.android.AndroidInjector
 
 @Subcomponent(
-  modules = [
-    ExchangeRateModule::class
-  ]
+    modules = [
+      ExchangeRateModule::class
+    ]
 )
 interface MainComponent : AndroidInjector<MainActivity> {
 

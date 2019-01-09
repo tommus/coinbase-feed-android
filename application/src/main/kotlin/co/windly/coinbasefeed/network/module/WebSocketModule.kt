@@ -23,7 +23,7 @@ class WebSocketModule {
   @Provides
   @Singleton
   internal fun provideFeedService(scarlet: Scarlet): FeedService =
-    scarlet.create()
+      scarlet.create()
 
   //endregion
 
@@ -31,18 +31,23 @@ class WebSocketModule {
 
   @Provides
   @Singleton
-  internal fun provideScarlet(
-    builder: Scarlet.Builder,
-    backoffStrategy: BackoffStrategy,
-    messageAdapterFactory: MessageAdapter.Factory,
-    streamAdapterFactory: StreamAdapter.Factory,
-    webSocketFactory: WebSocket.Factory
+  internal fun provideScarlet(builder: Scarlet.Builder): Scarlet =
+      builder
+          .build()
+
+  @Provides
+  @Singleton
+  internal fun provideScarletBuilder(
+      backoffStrategy: BackoffStrategy,
+      messageAdapterFactory: MessageAdapter.Factory,
+      streamAdapterFactory: StreamAdapter.Factory,
+      webSocketFactory: WebSocket.Factory
   ): Scarlet.Builder =
-    builder
-      .backoffStrategy(backoffStrategy)
-      .addMessageAdapterFactory(messageAdapterFactory)
-      .addStreamAdapterFactory(streamAdapterFactory)
-      .webSocketFactory(webSocketFactory)
+      Scarlet.Builder()
+          .backoffStrategy(backoffStrategy)
+          .addMessageAdapterFactory(messageAdapterFactory)
+          .addStreamAdapterFactory(streamAdapterFactory)
+          .webSocketFactory(webSocketFactory)
 
   //endregion
 
@@ -56,10 +61,10 @@ class WebSocketModule {
   @Provides
   @Singleton
   internal fun provideBackoffStrategy(): BackoffStrategy =
-    ExponentialWithJitterBackoffStrategy(
-      Duration.BASE,
-      Duration.MAX
-    )
+      ExponentialWithJitterBackoffStrategy(
+          Duration.BASE,
+          Duration.MAX
+      )
 
   //endregion
 
@@ -68,7 +73,7 @@ class WebSocketModule {
   @Provides
   @Singleton
   internal fun provideMessageAdapterFactory(): MessageAdapter.Factory =
-    GsonMessageAdapter.Factory()
+      GsonMessageAdapter.Factory()
 
   //endregion
 
@@ -77,7 +82,7 @@ class WebSocketModule {
   @Provides
   @Singleton
   internal fun provideStreamAdapterFactory(): StreamAdapter.Factory =
-    RxJava2StreamAdapterFactory()
+      RxJava2StreamAdapterFactory()
 
   //endregion
 
@@ -90,8 +95,8 @@ class WebSocketModule {
   @Provides
   @Singleton
   internal fun provideWebSocketFactory(okHttpClient: OkHttpClient): WebSocket.Factory =
-    okHttpClient
-      .newWebSocketFactory(Connection.URL)
+      okHttpClient
+          .newWebSocketFactory(Connection.URL)
 
   //endregion
 }

@@ -22,14 +22,19 @@ class FeedNetworkManager @Inject constructor() {
   //region Event & State
 
   fun observeEvent(): Flowable<Event> =
-    service
-      .observeEvent()
-      .subscribeOn(Schedulers.io())
+      service
+          .observeEvent()
+          .subscribeOn(Schedulers.io())
 
   fun observeState(): Flowable<State> =
-    service
-      .observeState()
-      .subscribeOn(Schedulers.io())
+      service
+          .observeState()
+          .subscribeOn(Schedulers.io())
+
+  fun observeText(): Flowable<String> =
+      service
+          .observeText()
+          .subscribeOn(Schedulers.io())
 
   //endregion
 }
