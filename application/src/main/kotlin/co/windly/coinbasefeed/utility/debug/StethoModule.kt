@@ -16,14 +16,14 @@ class StethoModule {
   @Provides
   @Singleton
   internal fun provideStethoInitailizer(
-      inspector: InspectorModulesProvider,
-      dumper: DumperPluginsProvider,
-      builder: Stetho.InitializerBuilder
+    inspector: InspectorModulesProvider,
+    dumper: DumperPluginsProvider,
+    builder: Stetho.InitializerBuilder
   ): Stetho.Initializer =
-      builder
-          .enableWebKitInspector(inspector)
-          .enableDumpapp(dumper)
-          .build()
+    builder
+      .enableWebKitInspector(inspector)
+      .enableDumpapp(dumper)
+      .build()
 
   //endregion
 
@@ -32,7 +32,7 @@ class StethoModule {
   @Provides
   @Singleton
   internal fun provideStethoInitiailizerBuilder(context: Context): Stetho.InitializerBuilder =
-      Stetho.newInitializerBuilder(context)
+    Stetho.newInitializerBuilder(context)
 
   //endregion
 
@@ -41,7 +41,7 @@ class StethoModule {
   @Provides
   @Singleton
   internal fun provideDumperPluginsProvider(context: Context): DumperPluginsProvider =
-      DumperPluginsProvider { Stetho.DefaultDumperPluginsBuilder(context).finish() }
+    DumperPluginsProvider { Stetho.DefaultDumperPluginsBuilder(context).finish() }
 
   //endregion
 
@@ -50,7 +50,7 @@ class StethoModule {
   @Provides
   @Singleton
   internal fun provideInspectorModulesProvider(context: Context): InspectorModulesProvider =
-      Stetho.defaultInspectorModulesProvider(context)
+    Stetho.defaultInspectorModulesProvider(context)
 
   //endregion
 }

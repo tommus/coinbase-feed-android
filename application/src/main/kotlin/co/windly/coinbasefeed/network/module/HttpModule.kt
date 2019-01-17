@@ -18,19 +18,19 @@ class HttpModule {
   @Provides
   @Singleton
   internal fun provideOkHttpClient(builder: OkHttpClient.Builder): OkHttpClient =
-      builder
-          .build()
+    builder
+      .build()
 
   @Provides
   @Singleton
   internal fun provideOkHttpClientBuilder(
-      @Named("logging-interceptor") interceptor: Interceptor
+    @Named("logging-interceptor") interceptor: Interceptor
   ) =
-      OkHttpClient.Builder()
-          .connectTimeout(30, SECONDS)
-          .readTimeout(30, SECONDS)
-          .writeTimeout(30, SECONDS)
-          .addInterceptor(interceptor)
+    OkHttpClient.Builder()
+      .connectTimeout(30, SECONDS)
+      .readTimeout(30, SECONDS)
+      .writeTimeout(30, SECONDS)
+      .addInterceptor(interceptor)
 
   //endregion
 
@@ -40,13 +40,13 @@ class HttpModule {
   @Singleton
   @Named("logging-interceptor")
   internal fun provideLoggingInterceptor(level: Level): Interceptor =
-      HttpLoggingInterceptor()
-          .setLevel(level)
+    HttpLoggingInterceptor()
+      .setLevel(level)
 
   @Provides
   @Singleton
   internal fun provideLoggingLevel(): Level =
-      Level.BODY
+    Level.BODY
 
   //endregion
 }

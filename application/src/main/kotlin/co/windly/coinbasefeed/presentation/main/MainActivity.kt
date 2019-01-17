@@ -17,7 +17,7 @@ class MainActivity : BaseFragmentActivity<MainView, MainPresenter>(), MainView, 
   lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
 
   override fun supportFragmentInjector(): DispatchingAndroidInjector<Fragment> =
-      fragmentInjector
+    fragmentInjector
 
   //endregion
 
@@ -33,7 +33,7 @@ class MainActivity : BaseFragmentActivity<MainView, MainPresenter>(), MainView, 
   lateinit var mainPresenter: MainPresenter
 
   override fun createPresenter(): MainPresenter =
-      mainPresenter
+    mainPresenter
 
   //endregion
 

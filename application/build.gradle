@@ -145,7 +145,7 @@ dependencies {
 
   implementation deps.network.okhttp
   implementation deps.network.okhttp_logging_interceptor
-  implementation deps.network.scarlet_message_adapter_gson
+  implementation deps.network.scarlet_message_adapter_jackson
   implementation deps.network.scarlet_runtime
   implementation deps.network.scarlet_stream_adapter_rxjava2
   implementation deps.network.scarlet_websocket_okhttp

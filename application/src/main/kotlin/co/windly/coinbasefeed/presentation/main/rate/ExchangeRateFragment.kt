@@ -36,7 +36,7 @@ class ExchangeRateFragment : BaseFragment<ExchangeRateView, ExchangeRatePresente
   lateinit var exchangeRatePresenter: ExchangeRatePresenter
 
   override fun createPresenter(): ExchangeRatePresenter =
-      exchangeRatePresenter
+    exchangeRatePresenter
 
   //endregion
 }

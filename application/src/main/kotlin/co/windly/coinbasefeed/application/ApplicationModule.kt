@@ -13,7 +13,7 @@ class ApplicationModule {
   @Provides
   @Singleton
   internal fun provideApplicationContext(application: CoinbaseFeed): Context =
-      application
+    application
 
   //endregion
 }

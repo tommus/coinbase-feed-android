@@ -1,11 +1,11 @@
 package co.windly.coinbasefeed.network.module
 
+import co.windly.coinbasefeed.network.adapter.StethoMessageAdapter
 import co.windly.coinbasefeed.network.service.FeedService
 import com.tinder.scarlet.MessageAdapter
 import com.tinder.scarlet.Scarlet
 import com.tinder.scarlet.StreamAdapter
 import com.tinder.scarlet.WebSocket
-import com.tinder.scarlet.messageadapter.gson.GsonMessageAdapter
 import com.tinder.scarlet.retry.BackoffStrategy
 import com.tinder.scarlet.retry.ExponentialWithJitterBackoffStrategy
 import com.tinder.scarlet.streamadapter.rxjava2.RxJava2StreamAdapterFactory
@@ -23,7 +23,7 @@ class WebSocketModule {
   @Provides
   @Singleton
   internal fun provideFeedService(scarlet: Scarlet): FeedService =
-      scarlet.create()
+    scarlet.create()
 
   //endregion
 
@@ -32,22 +32,22 @@ class WebSocketModule {
   @Provides
   @Singleton
   internal fun provideScarlet(builder: Scarlet.Builder): Scarlet =
-      builder
-          .build()
+    builder
+      .build()
 
   @Provides
   @Singleton
   internal fun provideScarletBuilder(
-      backoffStrategy: BackoffStrategy,
-      messageAdapterFactory: MessageAdapter.Factory,
-      streamAdapterFactory: StreamAdapter.Factory,
-      webSocketFactory: WebSocket.Factory
+    backoffStrategy: BackoffStrategy,
+    messageAdapterFactory: MessageAdapter.Factory,
+    streamAdapterFactory: StreamAdapter.Factory,
+    webSocketFactory: WebSocket.Factory
   ): Scarlet.Builder =
-      Scarlet.Builder()
-          .backoffStrategy(backoffStrategy)
-          .addMessageAdapterFactory(messageAdapterFactory)
-          .addStreamAdapterFactory(streamAdapterFactory)
-          .webSocketFactory(webSocketFactory)
+    Scarlet.Builder()
+      .backoffStrategy(backoffStrategy)
+      .addMessageAdapterFactory(messageAdapterFactory)
+      .addStreamAdapterFactory(streamAdapterFactory)
+      .webSocketFactory(webSocketFactory)
 
   //endregion
 
@@ -61,10 +61,10 @@ class WebSocketModule {
   @Provides
   @Singleton
   internal fun provideBackoffStrategy(): BackoffStrategy =
-      ExponentialWithJitterBackoffStrategy(
-          Duration.BASE,
-          Duration.MAX
-      )
+    ExponentialWithJitterBackoffStrategy(
+      Duration.BASE,
+      Duration.MAX
+    )
 
   //endregion
 
@@ -73,7 +73,7 @@ class WebSocketModule {
   @Provides
   @Singleton
   internal fun provideMessageAdapterFactory(): MessageAdapter.Factory =
-      GsonMessageAdapter.Factory()
+    StethoMessageAdapter.Factory()
 
   //endregion
 
@@ -82,7 +82,7 @@ class WebSocketModule {
   @Provides
   @Singleton
   internal fun provideStreamAdapterFactory(): StreamAdapter.Factory =
-      RxJava2StreamAdapterFactory()
+    RxJava2StreamAdapterFactory()
 
   //endregion
 
@@ -95,8 +95,8 @@ class WebSocketModule {
   @Provides
   @Singleton
   internal fun provideWebSocketFactory(okHttpClient: OkHttpClient): WebSocket.Factory =
-      okHttpClient
-          .newWebSocketFactory(Connection.URL)
+    okHttpClient
+      .newWebSocketFactory(Connection.URL)
 
   //endregion
 }
