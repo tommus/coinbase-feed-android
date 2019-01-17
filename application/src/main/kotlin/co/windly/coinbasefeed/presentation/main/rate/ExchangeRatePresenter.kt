@@ -1,6 +1,7 @@
 package co.windly.coinbasefeed.presentation.main.rate
 
 import co.windly.coinbasefeed.domain.manager.FeedDomainManager
+import co.windly.coinbasefeed.network.model.heartbeat.Heartbeat
 import co.windly.coinbasefeed.network.model.ticker.Ticker
 import co.windly.coinbasefeed.presentation.base.fragment.base.BaseFragmentPresenter
 import co.windly.coinbasefeed.utility.log.WiLogger
@@ -75,9 +76,10 @@ class ExchangeRatePresenter @Inject constructor(
     // If the connections has been established...
     if (event is WebSocket.Event.OnConnectionOpened<*>) {
 
-      // ...subscribe to updates and observe ticker.
+      // ...subscribe to updates and observe ticker and heartbeat.
       subscribeToUpdates()
       observeTicker()
+      observeHeartbeat()
     }
   }
 
@@ -168,6 +170,34 @@ class ExchangeRatePresenter @Inject constructor(
 
     // Log an error.
     WiLogger.e("An error occurred while observing ticker updates.")
+    WiLogger.e(throwable)
+  }
+
+  //endregion
+
+  //region Heartbeat
+
+  private fun observeHeartbeat() {
+    feedManager
+      .observeHeartbeat()
+      .subscribe(
+        { handleObserveHeartbeatSuccess(it) },
+        { handleObserveHeartbeatError(it) }
+      )
+      .addTo(disposables)
+  }
+
+  private fun handleObserveHeartbeatSuccess(heartbeat: Heartbeat) {
+
+    // Log the fact.
+    WiLogger.v("An update of heartbeat has been received.")
+    WiLogger.v("Heartbeat: $heartbeat.")
+  }
+
+  private fun handleObserveHeartbeatError(throwable: Throwable) {
+
+    // Log an error.
+    WiLogger.e("An error occurred while observing heartbeat updates.")
     WiLogger.e(throwable)
   }
 

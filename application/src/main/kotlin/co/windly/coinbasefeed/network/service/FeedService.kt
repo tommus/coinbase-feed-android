@@ -1,5 +1,6 @@
 package co.windly.coinbasefeed.network.service
 
+import co.windly.coinbasefeed.network.model.heartbeat.Heartbeat
 import co.windly.coinbasefeed.network.model.subscribe.Subscribe
 import co.windly.coinbasefeed.network.model.ticker.Ticker
 import com.tinder.scarlet.State
@@ -34,6 +35,13 @@ interface FeedService {
 
   @Receive
   fun observeTicker(): Flowable<Ticker>
+
+  //endregion
+
+  //region Heartbeat
+
+  @Receive
+  fun observeHeartbeat(): Flowable<Heartbeat>
 
   //endregion
 }

@@ -1,5 +1,8 @@
 package co.windly.coinbasefeed.network.manager
 
+import co.windly.coinbasefeed.network.model.heartbeat.Heartbeat
+import co.windly.coinbasefeed.network.model.subscribe.Channel
+import co.windly.coinbasefeed.network.model.subscribe.Channel.HEARTBEAT
 import co.windly.coinbasefeed.network.model.subscribe.Channel.TICKER
 import co.windly.coinbasefeed.network.model.subscribe.ProductId.BTC_USD
 import co.windly.coinbasefeed.network.model.subscribe.Subscribe
@@ -66,7 +69,7 @@ class FeedNetworkManager @Inject constructor() {
         val model = Subscribe(
           type = SUBSCRIBE,
           productIds = listOf(BTC_USD),
-          channels = listOf(TICKER)
+          channels = listOf(TICKER, HEARTBEAT)
         )
 
         // Send subscription request.
@@ -82,7 +85,17 @@ class FeedNetworkManager @Inject constructor() {
   fun observeTicker(): Flowable<Ticker> =
     service
       .observeTicker()
-      .filter { it.type == "ticker" }
+      .filter { it.type == Channel.TICKER.text }
+      .subscribeOn(Schedulers.io())
+
+  //endregion
+
+  //region Heartbeart
+
+  fun observeHeartbeat(): Flowable<Heartbeat> =
+    service
+      .observeHeartbeat()
+      .filter { it.type == Channel.HEARTBEAT.text }
       .subscribeOn(Schedulers.io())
 
   //endregion

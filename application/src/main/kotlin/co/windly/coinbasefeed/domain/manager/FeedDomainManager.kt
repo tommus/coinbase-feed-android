@@ -1,6 +1,7 @@
 package co.windly.coinbasefeed.domain.manager
 
 import co.windly.coinbasefeed.network.manager.FeedNetworkManager
+import co.windly.coinbasefeed.network.model.heartbeat.Heartbeat
 import co.windly.coinbasefeed.network.model.ticker.Ticker
 import com.tinder.scarlet.State
 import com.tinder.scarlet.WebSocket
@@ -46,6 +47,14 @@ class FeedDomainManager @Inject constructor() {
   fun observeTicker(): Flowable<Ticker> =
     network
       .observeTicker()
+
+  //endregion
+
+  //region Heartbeat
+
+  fun observeHeartbeat(): Flowable<Heartbeat> =
+    network
+      .observeHeartbeat()
 
   //endregion
 }
