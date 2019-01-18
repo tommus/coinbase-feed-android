@@ -19,7 +19,9 @@ import io.reactivex.annotations.SchedulerSupport
 import io.reactivex.annotations.SchedulerSupport.IO
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 @SchedulerSupport(value = IO)
 class FeedNetworkManager @Inject constructor() {
 

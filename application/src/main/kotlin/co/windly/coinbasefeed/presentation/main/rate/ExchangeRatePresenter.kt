@@ -7,6 +7,7 @@ import co.windly.coinbasefeed.presentation.base.fragment.base.BaseFragmentPresen
 import co.windly.coinbasefeed.utility.log.WiLogger
 import com.tinder.scarlet.State
 import com.tinder.scarlet.WebSocket
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject
 
@@ -76,9 +77,12 @@ class ExchangeRatePresenter @Inject constructor(
     // If the connections has been established...
     if (event is WebSocket.Event.OnConnectionOpened<*>) {
 
-      // ...subscribe to updates and observe ticker and heartbeat.
+      // Subscribe to updates and start polling tickers.
       subscribeToUpdates()
-      observeTicker()
+      startPollingTickers()
+
+      // Observe either ticker and heartbeat updates.
+      observeTickers()
       observeHeartbeat()
     }
   }
@@ -147,11 +151,39 @@ class ExchangeRatePresenter @Inject constructor(
 
   //endregion
 
-  //region Ticker
+  //region Ticker - Polling
 
-  private fun observeTicker() {
+  private fun startPollingTickers() {
     feedManager
-      .observeTicker()
+      .startPollingTickers()
+      .subscribe(
+        { handleStartPollingTickersSuccess() },
+        { handleStartPollingTickersError(it) }
+      )
+      .addTo(disposables)
+  }
+
+  private fun handleStartPollingTickersSuccess() {
+
+    // Log the fact.
+    WiLogger.v("Ticker updates polling has been started.")
+  }
+
+  private fun handleStartPollingTickersError(throwable: Throwable) {
+
+    // Log an error.
+    WiLogger.v("An error occurred while starting the ticker updates polling.")
+    WiLogger.v(throwable)
+  }
+
+  //endregion
+
+  //region Ticker - Observe
+
+  private fun observeTickers() {
+    feedManager
+      .observeTickers()
+      .observeOn(AndroidSchedulers.mainThread())
       .subscribe(
         { handleObserveTickerSuccess(it) },
         { handleObserveTickerError(it) }
@@ -159,11 +191,14 @@ class ExchangeRatePresenter @Inject constructor(
       .addTo(disposables)
   }
 
-  private fun handleObserveTickerSuccess(ticker: Ticker) {
+  private fun handleObserveTickerSuccess(tickers: List<Ticker>) {
 
     // Log the fact.
-    WiLogger.v("An update of ticker has been received.")
-    WiLogger.v("Ticker: $ticker.")
+    WiLogger.v("An update of ticker list has been received.")
+    WiLogger.v("Ticker: $tickers.")
+
+    // Display the ticker updates at the chart.
+    ifViewAttached { it.showTickerUpdates(tickers) }
   }
 
   private fun handleObserveTickerError(throwable: Throwable) {

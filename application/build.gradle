@@ -52,6 +52,14 @@ android {
 
   //endregion
 
+  //region Packaging
+
+  packagingOptions {
+    exclude "META-INF/proguard/androidx-annotations.pro"
+  }
+
+  //endregion
+
   //region Product Flavors
 
   productFlavors {
@@ -165,6 +173,7 @@ dependencies {
   implementation deps.support.app_compat
   implementation deps.support.constraint_layout
   implementation deps.support.design
+  implementation deps.ui.mp_android_chart
 
   //endregion
 }
