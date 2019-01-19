@@ -24,7 +24,7 @@ class FeedDomainManager @Inject constructor() {
 
   //endregion
 
-  //region Event & State
+  //region Event & State & Text
 
   fun observeEvent(): Flowable<WebSocket.Event> =
     network

@@ -5,16 +5,18 @@ import android.os.Bundle
 import co.windly.coinbasefeed.R
 import co.windly.coinbasefeed.network.model.ticker.Ticker
 import co.windly.coinbasefeed.presentation.base.fragment.base.BaseFragment
-import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.XAxis.XAxisPosition.BOTTOM
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import kotlinx.android.synthetic.main.fragment_exchange_rate.chartView
 import org.joda.time.DateTime
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
 import java.text.DecimalFormat
 import javax.inject.Inject
+import kotlin.math.absoluteValue
 
 class ExchangeRateFragment : BaseFragment<ExchangeRateView, ExchangeRatePresenter>(), ExchangeRateView {
 
@@ -56,79 +58,102 @@ class ExchangeRateFragment : BaseFragment<ExchangeRateView, ExchangeRatePresente
   object Configuration {
 
     // In minutes.
-    val HISTORY_LENGHT = 5
+    val HISTORY_LENGHT = 3
+
+    // Date formatter.
+    val DATE_FORMATTER = DateTimeFormat.shortTime()
+
+    // Amount formatter.
+    val AMOUNT_FORMATTER = "\$##.00"
+
+    // Time formatter.
+    val TIME_AXIS_FORMATTER = IAxisValueFormatter { value, axis ->
+      LocalTime
+        .fromMillisOfDay(value.toLong())
+        .toString(DATE_FORMATTER)
+    }
+
+    // Money formatter.
+    val MONEY_AXIS_FORMATTER = IAxisValueFormatter { value, axis ->
+      DecimalFormat(Configuration.AMOUNT_FORMATTER)
+        .format(value)
+    }
   }
 
   override fun showTickerUpdates(tickers: List<Ticker>) {
 
-    // Grab a current timestamp and calculate the first history timestamp.
-    val now = DateTime.now()
-    val start = now.minusMinutes(Configuration.HISTORY_LENGHT)
+    // Calculate time min and max values for X axis.
+    val maxTime = DateTime.now()
+    val minTime = maxTime.minusMinutes(Configuration.HISTORY_LENGHT)
 
-    // Filter the tickers to match the history gap.
-    val priceEntries = tickers
-      .filter { it.time.isNotEmpty() }
-      .filter { DateTime.parse(it.time).isAfter(start) }
-      .map { Entry(start.millisOfDay.toFloat(), it.price.toFloat()) }
+    // Prepare rate entries for Y axis.
+    val rateEntries = tickers
+      .filter { it.time != null }
+      .filter { it.time!!.isAfter(minTime) }
+      .map { Entry(it.time!!.millisOfDay.toFloat(), it.price.amount.toFloat()) }
 
-    // Configure prices data set.
-    val priceDataSet = LineDataSet(priceEntries, "BTC-USD")
+    // Prepare rate data set.
+    val rateData = LineDataSet(rateEntries, "BTC-USD")
       .apply {
         mode = LineDataSet.Mode.LINEAR
-        setDrawFilled(true)
         isHighlightEnabled = false
         setDrawValues(false)
       }
 
-    // Calculate min prices.
-    val minPrice = priceEntries.minBy { it.y }?.y ?: 0.0f
+    // Find lowest rate value.
+    val lowestRate = rateEntries.minBy { it.y }
 
-    // Prepare a list of initial entries.
-    val minEntries = listOf(
-      Entry(start.millisOfDay.toFloat(), minPrice),
-      Entry(now.millisOfDay.toFloat(), minPrice)
+    // Calculate granularity for X axis.
+    val xAxisGranularity =
+      (minTime.millisOfDay - maxTime.millisOfDay).absoluteValue / Configuration.HISTORY_LENGHT
+
+    // Prepare time min and max entries for X axis.
+    val minRateEntries = listOf(
+      Entry(minTime.millisOfDay.toFloat(), lowestRate?.y ?: 0.0f),
+      Entry(maxTime.millisOfDay.toFloat(), lowestRate?.y ?: 0.0f)
     )
 
-    // Configure min prices data set.
-    val minDataSet = LineDataSet(minEntries, "Min")
+    // Prepare time data set.
+    val minRateData = LineDataSet(minRateEntries, "Min")
       .apply {
         mode = LineDataSet.Mode.STEPPED
-        color = Color.argb(50, 140, 234, 255)
+        circleHoleColor = Color.TRANSPARENT
+        color = Color.RED
         isHighlightEnabled = false
+        setCircleColor(Color.RED)
         setDrawValues(false)
       }
 
-    // Configure chart.
+    // Prepare chart.
     with(chartView) {
+
+      // Configure right chart.
       axisRight.isEnabled = false
-
-      // Configure X axis.
-      with(xAxis) {
-        setValueFormatter { value, _ -> LocalTime.fromMillisOfDay(value.toLong()).toString(DateTimeFormat.shortTime()) }
-        position = XAxis.XAxisPosition.BOTH_SIDED
-        setDrawGridLines(false)
-        granularity = 10000.0f
-      }
-
-      // Configure Y axis.
-      with(axisLeft) {
-        setValueFormatter { value, _ -> DecimalFormat("\$##.00").format(value) }
-        setDrawGridLines(false)
-        granularity = 0.01f
-      }
 
       // Configure description.
       description.isEnabled = false
 
-      // Configure touch options.
-      setTouchEnabled(false)
-
       // Configure data.
-      data = LineData(priceDataSet, minDataSet)
-
-      // Invalidate chart.
-      invalidate()
+      data = LineData(rateData, minRateData)
     }
+
+    // Prepare X axis.
+    with(chartView.xAxis) {
+      position = BOTTOM
+      granularity = xAxisGranularity.toFloat()
+      valueFormatter = Configuration.TIME_AXIS_FORMATTER
+      setDrawGridLines(false)
+    }
+
+    // Prepare Y axis.
+    with(chartView.axisLeft) {
+      granularity = 0.01f
+      valueFormatter = Configuration.MONEY_AXIS_FORMATTER
+      setDrawGridLines(false)
+    }
+
+    // Invalidate chart.
+    chartView.invalidate()
   }
 
   //endregion

@@ -87,7 +87,7 @@ class FeedNetworkManager @Inject constructor() {
   fun observeTicker(): Flowable<Ticker> =
     service
       .observeTicker()
-      .filter { it.type == Channel.TICKER.text }
+      .filter { it.type == Channel.TICKER }
       .subscribeOn(Schedulers.io())
 
   //endregion
@@ -97,7 +97,7 @@ class FeedNetworkManager @Inject constructor() {
   fun observeHeartbeat(): Flowable<Heartbeat> =
     service
       .observeHeartbeat()
-      .filter { it.type == Channel.HEARTBEAT.text }
+      .filter { it.type == Channel.HEARTBEAT }
       .subscribeOn(Schedulers.io())
 
   //endregion

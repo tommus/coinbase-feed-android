@@ -6,6 +6,7 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.annotations.SchedulerSupport
 import io.reactivex.subjects.BehaviorSubject
+import java.util.Collections
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,7 +15,8 @@ class FeedPersistenceManager @Inject constructor() {
 
   //region Ticker
 
-  private val inMemoryTickerDatabase = mutableListOf<Ticker>()
+  private val inMemoryTickerDatabase =
+    Collections.synchronizedList(mutableListOf<Ticker>())
 
   private val tickerListSubject = BehaviorSubject.create<List<Ticker>>()
 

@@ -144,6 +144,7 @@ dependencies {
 
   //region Miscellaneous
 
+  implementation deps.misc.joda_money
   implementation deps.misc.joda_time
   implementation deps.misc.limbo
 

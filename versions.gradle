@@ -10,6 +10,7 @@ versions.android_gradle_plugin = "3.2.1"
 versions.constraint_layout = "1.1.3"
 versions.dagger = "2.20"
 versions.javax_annotation = "1.2"
+versions.joda_money = "1.0.1"
 versions.joda_time = "2.10.1"
 versions.kotlin = "1.3.11"
 versions.limbo = "0.5.5"
@@ -75,6 +76,7 @@ deps.kotlin = kotlin
 //region Miscellaneous
 
 def misc = [:]
+misc.joda_money = "org.joda:joda-money:$versions.joda_money"
 misc.joda_time = "joda-time:joda-time:$versions.joda_time"
 misc.limbo = "co.windly:limbo:$versions.limbo"
 misc.model_mapper = "org.modelmapper:modelmapper:$versions.model_mapper"
